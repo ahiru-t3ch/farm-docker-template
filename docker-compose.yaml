@@ -1,0 +1,60 @@
+services:
+
+  backend-fastapi:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    image: backend-fastapi-image:latest
+    networks:
+      - network-farmapp
+    command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    environment:
+      - MONGO_URI=mongodb://admin:password@backend-mongodb:27017
+      - DATABASE_NAME=farmapp_db
+      - COLLECTION_NAME=dummy_collection
+    ports:
+      - 8000:8000
+    depends_on:
+      - backend-mongodb
+    container_name: fastapi
+  
+  backend-mongo-express:
+    image: mongo-express
+    networks:
+      - network-farmapp
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=backend-mongodb
+      - ME_CONFIG_BASICAUTH=false # if set to true uncomment bellow 2 lines
+      #- ME_CONFIG_BASICAUTH_USERNAME=user
+      #- ME_CONFIG_BASICAUTH_PASSWORD=password
+    depends_on:
+      - backend-mongodb
+    container_name: mongoexpress
+  
+  backend-mongodb:
+    image: mongo
+    networks:
+      - network-farmapp
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=farmapp_db
+    container_name: mongodb
+
+volumes:
+  mongo-data:
+  mongo-config:
+
+networks:
+  network-farmapp:
+    name: network-farmapp
+    driver: bridge
