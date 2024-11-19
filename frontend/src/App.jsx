@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
-import CreateItemForm from "../components/CreateItemForm";
+import CreateItemForm from "./components/CreateItemForm";
 
 function App() {
   const [data, setData] = useState(null);
