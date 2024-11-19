@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
-export default function CreateItemForm() {
+export default function CreateItemForm({onRefresh}) {
     const [formData, setFormData] = useState({ name: "" });
 
     const handleChange = (e) => {
@@ -36,6 +36,7 @@ export default function CreateItemForm() {
             console.log(`Error: ${error.message}`);
         } finally {
             console.log("END");
+            onRefresh();
         }
       };
 
