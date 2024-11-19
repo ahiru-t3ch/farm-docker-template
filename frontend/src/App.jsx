@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import CreateItemForm from "./components/CreateItemForm";
 
+const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+
 function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/') // FastAPI endpoint
+    axios.get({FASTAPI_BASE_URL}) // FastAPI endpoint
       .then(response => setData(response.data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
