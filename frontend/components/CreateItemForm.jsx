@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+
 export default function CreateItemForm() {
     const [formData, setFormData] = useState({ name: "" });
 
@@ -12,7 +14,8 @@ export default function CreateItemForm() {
         e.preventDefault();
     
         try {
-          const response = await fetch("http://localhost:8000/items", {
+            console.log(FASTAPI_BASE_URL);
+            const response = await fetch(`${FASTAPI_BASE_URL}/items`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

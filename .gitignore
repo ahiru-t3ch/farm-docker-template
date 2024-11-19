@@ -2,6 +2,8 @@
 /backend/__pycache__/
 /backend/env/
 
+#===================================================
+
 # Frontend
 /frontend/logs
 /frontend/*.log
@@ -14,6 +16,12 @@
 /frontend/dist
 /frontend/dist-ssr
 /frontend/*.local
+
+# file should not be commit to hide credentials
+# but for teamplate / bluprint use we'll commit it
+#/frontend/.env
+
+#===================================================
 
 # Editor directories and files
 .vscode/*
