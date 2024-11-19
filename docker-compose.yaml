@@ -50,6 +50,21 @@ services:
       - MONGO_INITDB_DATABASE=farmapp_db
     container_name: mongodb
 
+  frontend-vite-react:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    image: frontend-react-image:latest
+    networks:
+      - network-farmapp
+    ports:
+      - 5173:5173
+    environment:
+      - VITE_FASTAPI_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend-fastapi
+    container_name: frontend-react
+
 volumes:
   mongo-data:
   mongo-config:
