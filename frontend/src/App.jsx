@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import CreateItemForm from "../components/CreateItemForm";
 
 function App() {
   const [data, setData] = useState(null);
@@ -14,6 +15,7 @@ function App() {
     <>
       <h1>Dummy App</h1>
       {data ? <p>{data.message}</p> : <p>No data</p>}
+      <CreateItemForm />
     </>
   )
 }

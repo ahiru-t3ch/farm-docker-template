@@ -30,11 +30,11 @@ db = client[DATABASE_NAME]
 collection = db[COLLECTION_NAME]
 
 # Define Pydantic model for input data
-class Item(BaseModel):
+class DummyItem(BaseModel):
     name: str
-    description: str = None
-    price: float
-    quantity: int
+    #description: str = None
+    #price: float
+    #quantity: int
 
 # Helper function to convert MongoDB's ObjectId to str
 def object_id_to_str(obj_id):
@@ -47,7 +47,7 @@ def index():
     return {"message":f"Hello world my secret = {os.environ['MONGO_URI']} VERSION CORS"}
 
 @app.post("/items/", response_model=dict)
-async def create_item(item: Item):
+async def create_item(item: DummyItem):
     item_dict = item.dict()
     result = await collection.insert_one(item_dict)
     return {"id": object_id_to_str(result.inserted_id)}
