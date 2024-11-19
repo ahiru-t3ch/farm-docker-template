@@ -66,3 +66,10 @@ async def read_item(item_id: str):
         raise HTTPException(status_code=404, detail="Item not found")
     item["_id"] = object_id_to_str(item["_id"])
     return item
+
+@app.delete("/items/{item_id}")
+async def delete_item(item_id: str):
+    result = await collection.delete_one({"_id": ObjectId(item_id)})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"message": "Item deleted"}
