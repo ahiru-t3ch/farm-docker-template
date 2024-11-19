@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 from typing import List
@@ -6,6 +7,15 @@ from bson import ObjectId
 import os
 
 app = FastAPI()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Allow request from React App
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Mongo DB
 
@@ -34,7 +44,7 @@ def object_id_to_str(obj_id):
 
 @app.get("/")
 def index():
-    return {"message":f"Hello world my secret = {os.environ['MONGO_URI']}"}
+    return {"message":f"Hello world my secret = {os.environ['MONGO_URI']} VERSION CORS"}
 
 @app.post("/items/", response_model=dict)
 async def create_item(item: Item):
