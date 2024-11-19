@@ -44,7 +44,7 @@ def object_id_to_str(obj_id):
 
 @app.get("/")
 def index():
-    return {"message":f"Hello world my secret = {os.environ['MONGO_URI']} VERSION CORS"}
+    return {"message":f"Dummy message returned by simple fastapi get"}
 
 @app.post("/items/", response_model=dict)
 async def create_item(item: DummyItem):
