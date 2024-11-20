@@ -16,6 +16,16 @@ services:
       - 8000:8000
     depends_on:
       - backend-mongodb
+    # Synchronise code update in running container
+    # Command to run after docker compose up is
+    # docker compose watch
+    develop:
+      watch:
+        - action: sync
+          path: backend
+          target: /app
+        - action: rebuild
+          path: requirements.txt
     container_name: fastapi
   
   backend-mongo-express:
@@ -63,6 +73,16 @@ services:
       - VITE_FASTAPI_BASE_URL=http://localhost:8000
     depends_on:
       - backend-fastapi
+    # Synchronise code update in running container
+    # Command to run after docker compose up is
+    # docker compose watch
+    develop:
+      watch:
+        - action: sync
+          path: frontend/src
+          target: /app/src
+        - action: rebuild
+          path: package.json
     container_name: frontend-react
 
 volumes:
