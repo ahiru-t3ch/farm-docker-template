@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <h1>Dummy App</h1>
+      <h1 className="text-3xl font-bold underline">Dummy App</h1>
       <DummyComponent />
       <ListItems trigger={refreshTrigger}/>
       <CreateItemForm onRefresh={handleRefresh} />
