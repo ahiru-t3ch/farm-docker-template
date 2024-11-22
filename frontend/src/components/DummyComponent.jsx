@@ -14,8 +14,10 @@ export default function DummyComponent(){
 
     return (
     <>
-    <h2>Dummy Component doing a simple get to FastApi</h2>
-    {data ? <p>{data.message}</p> : <p>No data</p>}
+    <div className="grid gap-2 p-4">
+      <h2 className="text-left text-xl">Dummy Component doing a simple get to FastApi</h2>
+      {data ? <p className="text-left italic">{data.message}</p> : <p>No data</p>}
+    </div>
     </>
     );
 }

@@ -15,10 +15,25 @@ function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Dummy App</h1>
-      <DummyComponent />
-      <ListItems trigger={refreshTrigger}/>
-      <CreateItemForm onRefresh={handleRefresh} />
+      <div className="p-4 bg-slate-400">
+        <header className="bg-yellow-600 gap-4 rounded">
+          <h1 className="text-center text-3xl font-bold">Dummy App</h1>
+        </header>
+        <div class="grid grid-cols-5 gap-4 p-4">
+          <div className="col-span-2 bg-yellow-500 rounded">
+            <DummyComponent />
+          </div>
+          <div className="col-span-2 bg-yellow-400 rounded">
+            <ListItems trigger={refreshTrigger}/>
+          </div>
+          <div className="col-span-1 bg-yellow-500 rounded">
+            <CreateItemForm onRefresh={handleRefresh} />
+          </div>
+        </div>
+        <footer className="bg-yellow-200 gap-4 rounded">
+          <h4 className="text-center text-sm">Thanks to use this template</h4>
+        </footer>
+      </div>
     </>
   )
 }

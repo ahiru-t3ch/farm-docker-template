@@ -30,12 +30,18 @@ export default function ListItems({trigger}) {
   
     return (
       <>
-        <h2>Dummy Item List</h2>
-        <ul>
+        <h2 className="text-lg font-semibold mb-4">Dummy Item List</h2>
+        <ul className="space-y-2">
           {items.map((item) => (
-            <li key={item._id}>
-                {item.name}
-                <button onClick={() => handleDelete(item._id)}>Delete</button>
+            <li 
+            className="flex justify-between items-center p-2 border rounded shadow-sm"
+            key={item._id}
+            >
+                <span className="text-gray-800">{item.name}</span>
+                <button 
+                className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+                onClick={() => handleDelete(item._id)}
+                >Delete</button>
             </li>
           ))}
         </ul>
