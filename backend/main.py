@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseModel
 from typing import List
 from bson import ObjectId
 import os
+from models import DummyItem
+from db import init_db, object_id_to_str
 
-app = FastAPI()
+app = FastAPI() # Fast API REST
 
 # Configure CORS
 app.add_middleware(
@@ -17,30 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mongo DB
-
-# MongoDB connection details
-MONGO_URI = os.environ['MONGO_URI']
-DATABASE_NAME = os.environ['DATABASE_NAME']
-COLLECTION_NAME = os.environ['COLLECTION_NAME']
-
-# MongoDB client setup
-client = AsyncIOMotorClient(MONGO_URI)
-db = client[DATABASE_NAME]
-collection = db[COLLECTION_NAME]
-
-# Define Pydantic model for input data
-class DummyItem(BaseModel):
-    name: str
-    #description: str = None
-    #price: float
-    #quantity: int
-
-# Helper function to convert MongoDB's ObjectId to str
-def object_id_to_str(obj_id):
-    return str(obj_id)
-
-# Fast API REST
+collection = init_db()
 
 @app.get("/")
 def index():
