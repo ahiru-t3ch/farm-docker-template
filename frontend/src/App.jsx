@@ -4,7 +4,7 @@ import CreateItemForm from "./components/CreateItemForm";
 import ListItems from "./components/ListItems";
 import DummyComponent from "./components/DummyComponent";
 
-const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+//const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 function App() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
