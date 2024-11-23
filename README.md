@@ -12,13 +12,14 @@ There are 4 containers configured into the `docker-compose.yaml` file:<br>
 
 ## Setup environements files for each container
 In `docker-compose.yaml` file you'll find in each service the attribute `env_file`.<br>
+<br>
 It contains the path for each environement file of each container, those files do set up the environments variables used by this application.<br>
 
 > [!CAUTION]
 > Avoid commiting those files
 
 > [!NOTE]
-> Here the *.env files content is shared for the example.
+> In this readme the *.env files content is shared for the example.
 
 For the 3 backend containers create 3 files in `backend/` directory and set them as follow:<br>
 `fastapi.env`:<br>
@@ -54,7 +55,7 @@ VITE_FASTAPI_BASE_URL=http://localhost:8000
 ```
 
 > [!TIP]
-> If you change the posts make sure they are the same into `docker-compose.yaml` and `vite.config.js`.
+> If you change the ports make sure they are the same into `docker-compose.yaml` and `vite.config.js`.
 
 ## Docker commands to launch project on your computer
 Creates and starts containers, build images before starting container, in detach mode:<br>
