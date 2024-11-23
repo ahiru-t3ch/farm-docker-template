@@ -1,40 +1,27 @@
-import React, {useEffect, useState} from "react";
-//import axios from 'axios';
-import CreateItemForm from "./components/CreateItemForm";
-import ListItems from "./components/ListItems";
-import DummyComponent from "./components/DummyComponent";
-
-//const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home"; 
+import About from "./components/About";
+import ItemFunctionality from "./components/ItemFunctionality";
 
 function App() {
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
-
-  const handleRefresh = () => {
-    setRefreshTrigger((prev) => prev + 1); // Increment to trigger refresh
-  };
-
   return (
-    <>
-      <div className="p-4 bg-slate-400">
-        <header className="bg-yellow-600 gap-4 rounded">
-          <h1 className="text-center text-3xl font-bold">Dummy App</h1>
-        </header>
-        <div class="grid grid-cols-5 gap-4 p-4">
-          <div className="col-span-2 bg-yellow-500 rounded">
-            <DummyComponent />
-          </div>
-          <div className="col-span-2 bg-yellow-400 rounded">
-            <ListItems trigger={refreshTrigger}/>
-          </div>
-          <div className="col-span-1 bg-yellow-500 rounded">
-            <CreateItemForm onRefresh={handleRefresh} />
-          </div>
+    <Router>
+      <nav className="bg-blue-600 p-4 shadow-md rounded">
+        <div className="container mx-auto flex justify-between items-center">
+          <ul className="flex space-x-6">
+            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/">Home</Link></li>
+            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/about">About</Link></li>
+            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/items">Item functionality</Link></li>
+          </ul>
         </div>
-        <footer className="bg-yellow-200 gap-4 rounded">
-          <h4 className="text-center text-sm">Thanks to use this template</h4>
-        </footer>
-      </div>
-    </>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/items" element={<ItemFunctionality />} />
+      </Routes>
+    </Router>
   )
 }
 
