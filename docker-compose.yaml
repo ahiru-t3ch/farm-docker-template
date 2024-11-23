@@ -8,18 +8,13 @@ services:
     networks:
       - network-farmapp
     command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
-    environment:
-      - MONGO_URI=mongodb://admin:password@backend-mongodb:27017
-      - DATABASE_NAME=farmapp_db
-      - COLLECTION_NAME=dummy_collection
+    env_file:
+      - ./backend/fastapi.env
     ports:
       - 8000:8000
     depends_on:
       - backend-mongodb
-    # Synchronise code update in running container
-    # Command to run after docker compose up is
-    # docker compose watch
-    develop:
+    develop: # for docker compose watch can be commented if not used
       watch:
         - action: sync
           path: backend
@@ -34,13 +29,8 @@ services:
       - network-farmapp
     ports:
       - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_SERVER=backend-mongodb
-      - ME_CONFIG_BASICAUTH=false # if set to true uncomment bellow 2 lines
-      #- ME_CONFIG_BASICAUTH_USERNAME=user
-      #- ME_CONFIG_BASICAUTH_PASSWORD=password
+    env_file:
+      - ./backend/mongoexpress.env
     depends_on:
       - backend-mongodb
     container_name: mongoexpress
@@ -54,10 +44,8 @@ services:
     volumes:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
-      - MONGO_INITDB_DATABASE=farmapp_db
+    env_file:
+      - ./backend/mongodb.env
     container_name: mongodb
 
   frontend-vite-react:
@@ -69,14 +57,11 @@ services:
       - network-farmapp
     ports:
       - 5173:5173
-    environment:
-      - VITE_FASTAPI_BASE_URL=http://localhost:8000
+    env_file:
+      - ./frontend/vitereact.env
     depends_on:
       - backend-fastapi
-    # Synchronise code update in running container
-    # Command to run after docker compose up is
-    # docker compose watch
-    develop:
+    develop: # for docker compose watch can be commented if not used
       watch:
         - action: sync
           path: frontend/src

@@ -1,6 +1,7 @@
 # Backend
 /backend/__pycache__/
 /backend/env/
+/backend/*.env
 
 #===================================================
 
@@ -16,6 +17,7 @@
 /frontend/dist
 /frontend/dist-ssr
 /frontend/*.local
+/frontend/*.env
 
 # file should not be commit to hide credentials
 # but for teamplate / bluprint use we'll commit it
