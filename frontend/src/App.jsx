@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios from 'axios';
+//import axios from 'axios';
 import CreateItemForm from "./components/CreateItemForm";
 import ListItems from "./components/ListItems";
 import DummyComponent from "./components/DummyComponent";
