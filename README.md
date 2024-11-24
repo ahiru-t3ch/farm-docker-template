@@ -52,8 +52,7 @@ COLLECTION_NAME=dummy_collection
 ```
 
 #### I.3.c Containers backend-mongodb and backend-mongo-express
-Create directory `backend-mongo/`.<br>
-In this directory create 2 files `mongoexpress.env` and `mongodb.env` and set them as follow:<br>
+Create 2 files `mongoexpress.env` and `mongodb.env` in directory `backend-mongo/` and set them as follow:<br>
 
 `mongoexpress.env`:<br>
 ```
