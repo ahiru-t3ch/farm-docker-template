@@ -1,7 +1,5 @@
 FROM node:18-alpine
 
-LABEL org.opencontainers.image.documentation="https://localhost:5173"
-
 WORKDIR /app
 
 COPY . /app

@@ -46,9 +46,10 @@ VITE_FASTAPI_BASE_URL=http://localhost:8000
 #### I.3.b Container backend-fastapi
 Create one file `fastapi.env` in directory `backend-fastapi/` and set it as follow:<br>
 ```
-MONGO_URI=mongodb://admin:password@backend-mongodb:27017
+MONGO_URI=mongodb://admin:password@backend-mongodb:27017 # backend-mongodb name of the image in docker-compose file
 DATABASE_NAME=farmapp_db
 COLLECTION_NAME=dummy_collection
+FRONT_REACT_URL=https://localhost:5173
 ```
 
 #### I.3.c Containers backend-mongodb and backend-mongo-express
