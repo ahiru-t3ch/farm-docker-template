@@ -1,33 +1,59 @@
 # Project farm-docker-template
 
 ## Presentation
-This project is a blank template with a Dockerise FARM tech stack (FastAPI, React, and MongoDB).<br>
-With Mongo express is used to interact with Mongo DB.<br>
-It's goal is to help anyone who wants to start a an application with FARM stack on Docker without starting from scratch.<br>
-There are 4 containers configured into the `docker-compose.yaml` file:<br>
+This project is a blank template with a Dockerise FARM tech stack (FastAPI, React and MongoDB).<br>
+With Mongo express, it's used to interact with Mongo DB.<br>
+Project's goal is to help anyone who wants to "start or shift fast" a web application with Dokerise FARM tech stack on without starting from scratch.<br>
+But you may also use it just for fun.<br>
+
+## I Quick start on your local machine
+Run the project with the essential explanations and configurations needed.
+
+### I.1 Install Docker
+Go to [Docker Website](https://www.docker.com/).<br>
+I personnaly use Docker Desktop because it includes:<br>
+* Docker Compose
+* Docker Engine
+* Docker Cli
+
+### I.2 Get code
+Clone project:<br>
+`git clone https://github.com/ahiru-t3ch/farm-docker-template.git`<br>
+Or simply download code from github and unzip it.<br>
+
+### I.3 Setup environements files for each container
+There are 4 containers configured into the `docker-compose.yaml` file (see service attribute):<br>
 * backend-fastapi
 * backend-mongo-express
 * backend-mongodb
 * frontend-vite-react
-
-## Setup environements files for each container
 In `docker-compose.yaml` file you'll find in each service the attribute `env_file`.<br>
-<br>
 It contains the path for each environement file of each container, those files do set up the environments variables used by this application.<br>
+**One <file_name>.env file has to be created foreach container.**<br>
 
 > [!CAUTION]
 > Avoid commiting those files
 
 > [!NOTE]
-> In this readme the *.env files content is shared for the example.
+> In this readme the *.env files content is shared to give an example.
 
-For the 3 backend containers create 3 files in `backend/` directory and set them as follow:<br>
-`fastapi.env`:<br>
+#### I.3.a Container frontend-vitereact
+Create one file `vitereact.env` in directory `frontend-vitereact/` and set it as follow:<br>
+```
+# Nota Bene: env variables should start with VITE_ to work
+VITE_FASTAPI_BASE_URL=http://localhost:8000
+```
+#### I.3.b Container backend-fastapi
+Create one file `fastapi.env` in directory `backend-fastapi/` and set it as follow:<br>
 ```
 MONGO_URI=mongodb://admin:password@backend-mongodb:27017
 DATABASE_NAME=farmapp_db
 COLLECTION_NAME=dummy_collection
 ```
+
+#### I.3.c Containers backend-mongodb and backend-mongo-express
+Create directory `backend-mongo/`.<br>
+In this directory create 2 files `mongoexpress.env` and `mongodb.env` and set them as follow:<br>
 
 `mongoexpress.env`:<br>
 ```
@@ -40,6 +66,7 @@ ME_CONFIG_BASICAUTH=false
 #ME_CONFIG_BASICAUTH_USERNAME=user
 #ME_CONFIG_BASICAUTH_PASSWORD=password
 ```
+
 `mongodb.env`:<br>
 ```
 MONGO_INITDB_ROOT_USERNAME=admin
@@ -47,13 +74,13 @@ MONGO_INITDB_ROOT_PASSWORD=password
 MONGO_INITDB_DATABASE=farmapp_db
 ```
 
-For the frontkend container create 1 files in `frontend/` directory and set it as follow:<br>
-`vitereact.env`:<br>
-```
-# Nota Bene: env variables should start with VITE_ to work
-VITE_FASTAPI_BASE_URL=http://localhost:8000
-```
+## I.4 Launch application on your local Docker
+In project root (where the docker-compose.yaml is) run commant:<br>
+`docker compose up --build -d`<br>
+Then access webap on link: [http://localhost:5173/](http://localhost:5173/)<br>
 
+# II Annexes
+## Ports
 > [!TIP]
 > If you change the ports make sure they are the same into `docker-compose.yaml` and `vite.config.js`.
 

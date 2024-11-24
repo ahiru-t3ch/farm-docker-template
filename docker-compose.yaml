@@ -68,7 +68,7 @@ services:
           target: /app/src
         - action: rebuild
           path: package.json
-    container_name: frontend-react
+    container_name: frontend-vitereact
 
 volumes:
   mongo-data:
