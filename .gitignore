@@ -1,27 +1,28 @@
-# Backend
-/backend/__pycache__/
-/backend/env/
-/backend/*.env
+# Backend FastAPI
+/backend-fastapi/__pycache__/
+/backend-fastapi/env/
+/backend-fastapi/*.env
+
+#===================================================
+
+# Backend Mongo
+/backend-mongo/*.env
 
 #===================================================
 
 # Frontend
-/frontend/logs
-/frontend/*.log
-/frontend/npm-debug.log*
-/frontend/yarn-debug.log*
-/frontend/yarn-error.log*
-/frontend/pnpm-debug.log*
-/frontend/lerna-debug.log*
-/frontend/node_modules
-/frontend/dist
-/frontend/dist-ssr
-/frontend/*.local
-/frontend/*.env
-
-# file should not be commit to hide credentials
-# but for teamplate / bluprint use we'll commit it
-#/frontend/.env
+/frontend-vitereact/logs
+/frontend-vitereact/*.log
+/frontend-vitereact/npm-debug.log*
+/frontend-vitereact/yarn-debug.log*
+/frontend-vitereact/yarn-error.log*
+/frontend-vitereact/pnpm-debug.log*
+/frontend-vitereact/lerna-debug.log*
+/frontend-vitereact/node_modules
+/frontend-vitereact/dist
+/frontend-vitereact/dist-ssr
+/frontend-vitereact/*.local
+/frontend-vitereact/*.env
 
 #===================================================
 

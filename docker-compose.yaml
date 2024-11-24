@@ -2,14 +2,14 @@ services:
 
   backend-fastapi:
     build:
-      context: backend
+      context: backend-fastapi
       dockerfile: Dockerfile
     image: backend-fastapi-image:latest
     networks:
       - network-farmapp
     command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
     env_file:
-      - ./backend/fastapi.env
+      - ./backend-fastapi/fastapi.env
     ports:
       - 8000:8000
     depends_on:
@@ -17,7 +17,7 @@ services:
     develop: # for docker compose watch can be commented if not used
       watch:
         - action: sync
-          path: backend
+          path: backend-fastapi
           target: /app
         - action: rebuild
           path: requirements.txt
@@ -30,7 +30,7 @@ services:
     ports:
       - 8081:8081
     env_file:
-      - ./backend/mongoexpress.env
+      - ./backend-mongo/mongoexpress.env
     depends_on:
       - backend-mongodb
     container_name: mongoexpress
@@ -45,12 +45,12 @@ services:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
     env_file:
-      - ./backend/mongodb.env
+      - ./backend-mongo/mongodb.env
     container_name: mongodb
 
   frontend-vite-react:
     build:
-      context: frontend
+      context: frontend-vitereact
       dockerfile: Dockerfile
     image: frontend-react-image:latest
     networks:
@@ -58,7 +58,7 @@ services:
     ports:
       - 5173:5173
     env_file:
-      - ./frontend/vitereact.env
+      - ./frontend-vitereact/vitereact.env
     depends_on:
       - backend-fastapi
     develop: # for docker compose watch can be commented if not used
