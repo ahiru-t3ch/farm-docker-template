@@ -93,7 +93,7 @@ Copy those 2 files into: <br>
 In project root (where the docker-compose.yaml is) run commant:<br>
 `docker compose up --build -d`<br>
 Then access:<br>
-* Webapp on link: [https://localhost:5173/](http://localhost:5173/)
+* Webapp on link: [https://localhost:5173/](https://localhost:5173/)
 * FastAPI on link: [https://localhost:8000/docs/](https://localhost:8000/docs/)
 * Mongo DB on link: [http://localhost:27017/](http://localhost:27017/)
 * Monexpress on link: [http://localhost:8081/](http://localhost:8081/)
