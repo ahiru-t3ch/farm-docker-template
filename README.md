@@ -9,7 +9,7 @@ But you may also use it just for fun.<br>
 ## I Quick start on your local machine
 Run the project with the essential explanations and configurations needed.
 
-### I.1 Install Docker
+### I.1 Install Docker (requirement)
 Go to [Docker Website](https://www.docker.com/).<br>
 I personnaly use Docker Desktop because it includes:<br>
 * Docker Compose
@@ -73,10 +73,30 @@ MONGO_INITDB_ROOT_PASSWORD=password
 MONGO_INITDB_DATABASE=farmapp_db
 ```
 
-## I.4 Launch application on your local Docker
+### I.4 Setup SSL/TLS certs for frontend-vitereact and backend-fastapi
+Run commands to install mkcert and generate keys:<br>
+```
+sudo apt install mkcert
+sudo apt install libnss3-tools
+mkcert -install
+```
+
+This'll generate 2 files:<br>
+* localhost.pem
+* localhost-key.pem
+
+Copy those 2 files into: <br>
+* frontend-vitereact/certs/
+* backend-fastapi/certs/
+
+### I.5 Launch application on your local Docker
 In project root (where the docker-compose.yaml is) run commant:<br>
 `docker compose up --build -d`<br>
-Then access webap on link: [http://localhost:5173/](http://localhost:5173/)<br>
+Then access:<br>
+Webapp on link: [https://localhost:5173/](http://localhost:5173/)
+FastAPI on link: [https://localhost:8000/docs/](https://localhost:8000/docs/)
+Mongo DB on link: [http://localhost:27017/](http://localhost:27017/)
+Monexpress on link: [http://localhost:8081/](http://localhost:8081/)
 
 # II Annexes
 ## Ports

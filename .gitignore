@@ -2,6 +2,7 @@
 /backend-fastapi/__pycache__/
 /backend-fastapi/env/
 /backend-fastapi/*.env
+/backend-fastapi/certs/*pem
 
 #===================================================
 
@@ -23,6 +24,7 @@
 /frontend-vitereact/dist-ssr
 /frontend-vitereact/*.local
 /frontend-vitereact/*.env
+/frontend-vitereact/certs/*pem
 
 #===================================================
 

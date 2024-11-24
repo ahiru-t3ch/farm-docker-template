@@ -7,7 +7,7 @@ services:
     image: backend-fastapi-image:latest
     networks:
       - network-farmapp
-    command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0 --ssl-keyfile /app/certs/localhost-key.pem --ssl-certfile /app/certs/localhost.pem"
     env_file:
       - ./backend-fastapi/fastapi.env
     ports:
@@ -64,7 +64,7 @@ services:
     develop: # for docker compose watch can be commented if not used
       watch:
         - action: sync
-          path: frontend/src
+          path: frontend-vitereact/src
           target: /app/src
         - action: rebuild
           path: package.json
