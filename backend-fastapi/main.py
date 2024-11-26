@@ -1,7 +1,7 @@
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi import FastAPI, HTTPException, Depends, status, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
-
+from pydantic import EmailStr
 from typing import List
 from typing_extensions import Annotated
 from bson import ObjectId
@@ -49,7 +49,6 @@ fake_users_db = {
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
@@ -113,6 +112,38 @@ async def get_current_active_user(
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+
+@app.post("/register", response_model=dict)
+async def register_user(
+    username: str = Body(...),
+    password: str = Body(...),
+    email: EmailStr = Body(...),
+    full_name: str = Body(...),
+):
+    """
+    Register a new user.
+    """
+    # Check if the username already exists
+    existing_user = await collection_users.find_one({"username": username})
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already exists"
+        )
+    # Hash the password
+    hashed_password = get_password_hash(password)
+    # Create the user data
+    user_data = {
+        "username": username,
+        "email": email,
+        "full_name": full_name,
+        "hashed_password": hashed_password,
+        "disabled": False,  # Default value for new users
+    }
+    # Save user to the database
+    result = await collection_users.insert_one(user_data)
+    return {"message": "User registered successfully", "id": object_id_to_str(result.inserted_id)}
 
 
 @app.post("/token")
