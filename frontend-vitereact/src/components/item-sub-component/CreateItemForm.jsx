@@ -1,9 +1,11 @@
 import { useState } from "react";
+import axios from 'axios';
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 export default function CreateItemForm({onRefresh}) {
     const [formData, setFormData] = useState({ name: "" });
+    const [message, setMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -11,34 +13,34 @@ export default function CreateItemForm({onRefresh}) {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+      e.preventDefault();
     
-        try {
-            console.log(FASTAPI_BASE_URL);
-            const response = await fetch(`${FASTAPI_BASE_URL}/items`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              "name": formData.name,
-            }),
-          });
+      try {
+        const response = await axios.post(`${FASTAPI_BASE_URL}/itemsx`, {
+          name: formData.name,
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
     
-          if (response.ok) {
-            setFormData({ name: ""});
-            console.log("OK");
-          } else {
-            const errorData = await response.json();
-            console.log(`Error: ${errorData.detail || "Something went wrong"}`);
-          }
-        } catch (error) {
-            console.log(`Error: ${error.message}`);
-        } finally {
-            console.log("END");
-            onRefresh();
+        if (response.status === 200) {
+          setFormData({ name: "" });
+        } else {
+          setMessage(`Error: ${response.data.detail || "Something went wrong"}`);
         }
-      };
+      } catch (error) {
+        if (error.response) {
+          // If the error is from the server, we get a response object
+          setMessage(`Error: ${error.response.data.detail || "Something went wrong"}`);
+        } else {
+          // For other errors (e.g., network issues)
+          setMessage(`Error: ${error.message}`);
+        }
+      } finally {
+        onRefresh();
+      }
+    };
 
     return (
     <>
@@ -60,6 +62,7 @@ export default function CreateItemForm({onRefresh}) {
             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                 Create Item
             </button>
+            <p className="text-center mt-4">{message}</p>
         </form>
       </div>
     </>
