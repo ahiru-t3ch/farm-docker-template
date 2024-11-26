@@ -3,6 +3,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import ItemFunctionality from "./components/ItemFunctionality";
 import Register from "./components/Register";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         <Route path="/items" element={<ItemFunctionality />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+
+      <Footer />
+
     </Router>
   )
 }

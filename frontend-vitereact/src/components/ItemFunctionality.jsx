@@ -27,9 +27,6 @@ export default function ItemFunctionality() {
                     <CreateItemForm onRefresh={handleRefresh} />
                 </div>
             </div>
-            <footer className="bg-yellow-200 gap-4 rounded">
-            <h4 className="text-center text-sm">Thanks to use this template</h4>
-            </footer>
         </div>
         </>
     )
