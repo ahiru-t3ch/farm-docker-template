@@ -4,6 +4,7 @@ import About from "./components/About";
 import ItemFunctionality from "./components/ItemFunctionality";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/about">About</Link></li>
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/items">Item functionality</Link></li>
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/register">Register</Link></li>
+            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/login">Login</Link></li>
           </ul>
         </div>
       </nav>
@@ -24,6 +26,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/items" element={<ItemFunctionality />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       <Footer />
