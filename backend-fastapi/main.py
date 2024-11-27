@@ -6,15 +6,14 @@ from typing import List
 from typing_extensions import Annotated
 from bson import ObjectId
 import os
-import jwt
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 from jwt.exceptions import InvalidTokenError
-from passlib.context import CryptContext
-
+from models import DummyItem, User, Token, TokenData
 from db import init_db, object_id_to_str
-from models import DummyItem, User, UserInDB, Token, TokenData
+from utils_auth_token import verify_password, get_password_hash, create_access_token, decode_token
 
-app = FastAPI() # Fast API REST
+
+app = FastAPI()
 
 
 # Configure CORS
@@ -32,21 +31,10 @@ collection_dummy = collections['collection_dummy']
 collection_users = collections['collection_users'] 
 
 
-SECRET_KEY = os.environ['SECRET_KEY']
-ALGORITHM = os.environ['ALGORITHM']
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ['ACCESS_TOKEN_EXPIRE_MINUTES'])
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
 
 
 async def authenticate_user(collection_users, username: str, password: str):
@@ -58,17 +46,6 @@ async def authenticate_user(collection_users, username: str, password: str):
     return user
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
-    else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -76,14 +53,13 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = decode_token(token)
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
     except InvalidTokenError:
         raise credentials_exception
-    #user = get_user(collection_users, username=token_data.username)
     user = await collection_users.find_one({"username": token_data.username})
     if user is None:
         raise credentials_exception
@@ -162,15 +138,6 @@ async def read_users_me(
     current_user: Annotated[User, Depends(get_current_active_user)],
 ):
     return current_user
-
-
-@app.get("/users/me/items/")
-async def read_own_items(
-    current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return [{"item_id": "Foo", "owner": current_user.username}]
-
-# OAuth2 end
 
 
 @app.get("/")
