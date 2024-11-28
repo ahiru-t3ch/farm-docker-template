@@ -27,9 +27,7 @@ const Login = () => {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         }
-      );
-      
-      console.log(response);
+      );      
       localStorage.setItem("access_token", response.data.access_token);
       setMessage("Login successful!");
       setIsLoggedIn(true);

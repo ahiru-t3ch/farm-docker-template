@@ -5,6 +5,8 @@ import ItemFunctionality from "./components/ItemFunctionality";
 import Register from "./components/Register";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
+
 
 function App() {
   return (
@@ -17,6 +19,10 @@ function App() {
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/items">Item functionality</Link></li>
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/register">Register</Link></li>
             <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/login">Login</Link></li>
+            
+            <li className="text-white hover:text-blue-300 transition duration-300">
+              <Logout />
+            </li>
           </ul>
         </div>
       </nav>
@@ -27,6 +33,7 @@ function App() {
         <Route path="/items" element={<ItemFunctionality />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
 
       <Footer />

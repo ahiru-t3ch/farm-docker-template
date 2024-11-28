@@ -16,7 +16,7 @@ export default function CreateItemForm({onRefresh}) {
       e.preventDefault();
     
       try {
-        const response = await axios.post(`${FASTAPI_BASE_URL}/itemsx`, {
+        const response = await axios.post(`${FASTAPI_BASE_URL}/items`, {
           name: formData.name,
         }, {
           headers: {
