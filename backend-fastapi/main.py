@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, status, Body
+from fastapi import FastAPI, HTTPException, Depends, status, Body, Form
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import EmailStr
@@ -11,7 +11,7 @@ from jwt.exceptions import InvalidTokenError
 from models import DummyItem, User, Token, TokenData
 from db import init_db, object_id_to_str
 from utils_auth_token import verify_password, get_password_hash, create_access_token, decode_token
-
+#from utils_db_actions import blacklist_token, is_token_blacklisted
 
 app = FastAPI()
 
@@ -28,7 +28,9 @@ app.add_middleware(
 
 collections = init_db()
 collection_dummy = collections['collection_dummy'] 
-collection_users = collections['collection_users'] 
+collection_users = collections['collection_users']
+collection_blacklisted_tokens = collections['collection_blacklisted_tokens']
+
 
 
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ['ACCESS_TOKEN_EXPIRE_MINUTES'])
@@ -131,6 +133,24 @@ async def login_for_access_token(
         data={"sub": user["username"]}, expires_delta=access_token_expires
     )
     return Token(access_token=access_token, token_type="bearer")
+
+
+#@app.post("/logout")
+#def logout(token: str):
+#    if not token:
+#        raise HTTPException(status_code=400, detail="Missing or empty token")
+#    if is_token_blacklisted(collection_blacklisted_tokens, token):
+#        raise HTTPException(status_code=400, detail="Token is already blacklisted")
+#    blacklist_token(token)
+#    return {"message": "Token has been invalidated"}
+
+
+#@app.get("/secure-endpoint")
+#def secure_endpoint(token: str):
+#    if is_token_blacklisted(token):
+#        raise HTTPException(status_code=401, detail="Invalid token")
+#    payload = decode_token(token)
+#    return {"message": "Secure content", "user": payload.get("sub")}
 
 
 @app.get("/users/me/", response_model=User)

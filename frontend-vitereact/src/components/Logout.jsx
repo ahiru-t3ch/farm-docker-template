@@ -1,17 +1,37 @@
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 const Logout = () => {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        // Remove token from localStorage/sessionStorage
-        localStorage.removeItem('access_token'); // or sessionStorage.removeItem('token');
+    const handleLogout = async () => {
+        const token = localStorage.getItem("access_token");
+        
+        if (!token) {
+            console.log("No access token found");
+            navigate('/login');
+            return;
+        }
 
-        // Optionally remove additional user info stored in state
-        // e.g., localStorage.removeItem('user');
-
-        // Redirect to the login page
-        navigate('/login');
+        try {
+            // Error 422 bad content
+            /*await axios.post(
+              `${FASTAPI_BASE_URL}/logout`, 
+              token.toString(),
+              {
+                  headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                  },
+              }
+            );*/
+            localStorage.removeItem('access_token');      
+          } catch (error) {
+            console.log(error);
+          } finally {
+            navigate('/login');
+          }
     };
 
     return (

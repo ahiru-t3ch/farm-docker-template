@@ -9,12 +9,14 @@ def init_db() -> dict:
     DATABASE_NAME = os.environ['DATABASE_NAME']
     COLLECTION_DUMMY = os.environ['COLLECTION_DUMMY']
     COLLECTION_USERS = os.environ['COLLECTION_USERS']
+    COLLECTION_BLACKLISTED_TOKENS = os.environ['COLLECTION_BLACKLISTED_TOKENS']
     # MongoDB client setup
     client = AsyncIOMotorClient(MONGO_URI)
     db = client[DATABASE_NAME]
     collections = {
         'collection_dummy': db[COLLECTION_DUMMY],
-        'collection_users': db[COLLECTION_USERS]
+        'collection_users': db[COLLECTION_USERS],
+        'collection_blacklisted_tokens': db[COLLECTION_BLACKLISTED_TOKENS]
     }
     return collections
 
