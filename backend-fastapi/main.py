@@ -1,17 +1,16 @@
-from fastapi import FastAPI, HTTPException, Depends, status, Body, Form
+from fastapi import FastAPI, HTTPException, Depends, status, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import EmailStr
-from typing import List
 from typing_extensions import Annotated
-from bson import ObjectId
 import os
 from datetime import timedelta
 from jwt.exceptions import InvalidTokenError
-from models import DummyItem, User, Token, TokenData
+
+from models import User, Token, TokenData
 from db import init_db, object_id_to_str
 from utils_auth_token import verify_password, get_password_hash, create_access_token, decode_token
-#from utils_db_actions import blacklist_token, is_token_blacklisted
+from routers import items
 
 app = FastAPI()
 
@@ -153,45 +152,9 @@ async def login_for_access_token(
 #    return {"message": "Secure content", "user": payload.get("sub")}
 
 
-@app.get("/users/me/", response_model=User)
-async def read_users_me(
-    current_user: Annotated[User, Depends(get_current_active_user)],
-):
-    return current_user
+app.include_router(items.router)
 
 
 @app.get("/")
 def index():
-    return {"message":f"Dummy message returned by simple fastapi get"}
-
-
-@app.post("/items/", response_model=dict)
-async def create_item(item: DummyItem):
-    item_dict = item.dict()
-    result = await collection_dummy.insert_one(item_dict)
-    return {"id": object_id_to_str(result.inserted_id)}
-
-
-@app.get("/items/", response_model=List[dict])
-async def read_items():
-    items = await collection_dummy.find().to_list(length=100)  # Limit number of items to retrieve
-    for item in items:
-        item["_id"] = object_id_to_str(item["_id"])  # Convert ObjectId to string
-    return items
-
-
-@app.get("/items/{item_id}", response_model=dict)
-async def read_item(item_id: str):
-    item = await collection_dummy.find_one({"_id": ObjectId(item_id)})
-    if item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-    item["_id"] = object_id_to_str(item["_id"])
-    return item
-
-
-@app.delete("/items/{item_id}")
-async def delete_item(item_id: str):
-    result = await collection_dummy.delete_one({"_id": ObjectId(item_id)})
-    if result.deleted_count == 0:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return {"message": "Item deleted"}
+    return {"message":f"Hello World"}
