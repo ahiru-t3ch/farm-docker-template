@@ -1,7 +1,5 @@
 from fastapi import HTTPException, APIRouter
 from typing import List
-from typing import List
-from typing_extensions import Annotated
 from bson import ObjectId
 
 from models import DummyItem
@@ -10,8 +8,7 @@ from db import init_db, object_id_to_str
 
 collections = init_db()
 collection_dummy = collections['collection_dummy'] 
-#collection_users = collections['collection_users']
-#collection_blacklisted_tokens = collections['collection_blacklisted_tokens']
+
 
 router = APIRouter()
 
