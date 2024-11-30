@@ -8,7 +8,7 @@ from jwt.exceptions import InvalidTokenError
 
 from models import User, Token, TokenData
 from db import init_db, object_id_to_str
-from utils_auth_token import verify_password, get_password_hash, create_access_token, decode_token
+from utils.auth_token import verify_password, get_password_hash, create_access_token, decode_token
 
 
 collections = init_db()
