@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { updateLocalStorage } from './ConnectionStatus';
 
 
 const Login = () => {
@@ -28,7 +29,8 @@ const Login = () => {
             },
         }
       );      
-      localStorage.setItem("access_token", response.data.access_token);
+      //localStorage.setItem("access_token", response.data.access_token);
+      updateLocalStorage("access_token", response.data.access_token);
       setMessage("Login successful!");
       setIsLoggedIn(true);
     } catch (error) {
