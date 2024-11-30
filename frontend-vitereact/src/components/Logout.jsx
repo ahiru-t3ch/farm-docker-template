@@ -16,22 +16,13 @@ const Logout = () => {
         }
 
         try {
-            // Error 422 bad content
-            /*await axios.post(
-              `${FASTAPI_BASE_URL}/logout`, 
-              token.toString(),
-              {
-                  headers: {
-                      "Content-Type": "application/x-www-form-urlencoded",
-                  },
-              }
-            );*/
+            // To Do: Call logout endpoint
             localStorage.removeItem('access_token');      
-          } catch (error) {
+        } catch (error) {
             console.log(error);
-          } finally {
+        } finally {
             navigate('/login');
-          }
+        }
     };
 
     return (

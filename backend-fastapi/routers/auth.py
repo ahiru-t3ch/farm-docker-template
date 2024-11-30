@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import EmailStr
 from typing_extensions import Annotated
 import os
-from datetime import timedelta
+from datetime import timedelta, datetime
 from jwt.exceptions import InvalidTokenError
 
 from models import User, Token, TokenData
@@ -13,6 +13,7 @@ from utils.auth_token import verify_password, get_password_hash, create_access_t
 
 collections = init_db()
 collection_users = collections['collection_users']
+collection_blacklisted_tokens = collections['collection_blacklisted_tokens']
 
 
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ['ACCESS_TOKEN_EXPIRE_MINUTES'])
@@ -120,21 +121,4 @@ async def login_for_access_token(
     return Token(access_token=access_token, token_type="bearer")
 
 
-#@router.post("/logout")
-#def logout(token: str):
-#    if not token:
-#        raise HTTPException(status_code=400, detail="Missing or empty token")
-#    if is_token_blacklisted(collection_blacklisted_tokens, token):
-#        raise HTTPException(status_code=400, detail="Token is already blacklisted")
-#    blacklist_token(token)
-#    return {"message": "Token has been invalidated"}
-
-
-#@app.get("/secure-endpoint")
-#def secure_endpoint(token: str):
-#    if is_token_blacklisted(token):
-#        raise HTTPException(status_code=401, detail="Invalid token")
-#    payload = decode_token(token)
-#    return {"message": "Secure content", "user": payload.get("sub")}
-
-
+# TO DO: Add logout router
