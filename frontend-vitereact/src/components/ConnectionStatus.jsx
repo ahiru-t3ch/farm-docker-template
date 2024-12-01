@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Logout from "./Logout";
 
 
@@ -27,9 +28,17 @@ const ConnectionStatus = () => {
   }, []);
 
   if (isConnected) {
-    return <Logout />
+    return (<Logout />);
   } else {
-    return <p className="text-white hover:text-blue-300 transition duration-300">TO DO: Display login here</p>
+    return (
+      <>
+        <div className="container mx-auto flex justify-between items-center">
+          <ul className="flex space-x-6">
+            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/login">Login</Link></li>
+          </ul>
+        </div>
+      </>
+    );
   }
 };
 

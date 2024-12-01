@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 import { updateLocalStorage } from './ConnectionStatus';
 
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -29,10 +32,10 @@ const Login = () => {
             },
         }
       );      
-      //localStorage.setItem("access_token", response.data.access_token);
       updateLocalStorage("access_token", response.data.access_token);
       setMessage("Login successful!");
       setIsLoggedIn(true);
+      navigate('/'); // go to home
     } catch (error) {
       console.log(error);
       setMessage(error.response?.data?.detail || "Invalid username or password");
@@ -72,6 +75,7 @@ const Login = () => {
       <p className={`text-center mt-4 ${isLoggedIn ? "text-green-600" : "text-red-600"}`}>
         {message}
       </p>
+      <p className="text-center mt-4"><Link to="/register">Register</Link></p>
     </div>
   );
 };
