@@ -24,4 +24,4 @@ app.include_router(auth.router)
 
 @app.get("/")
 def index():
-    return {"message":f"Hello World"}
+    return {"message":f"This message is returned by FastApi Backend: Hello World!!!"}
