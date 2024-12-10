@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link"
 import React from "react";
@@ -5,6 +6,10 @@ import icon from '../assets/icon.png';
 import ConnectNavHandler from "./ConnectNavHandler";
 
 export default function NavigationHeader() {
+    const [isConnected, setIsConnected] = useState(
+        !!localStorage.getItem("access_token")
+    );
+
     return (
         <header className="fixed w-full bg-white shadow">
             <nav className="max-w-7xl mx-auto px-4 flex justify-between items-center py-4">
@@ -16,6 +21,9 @@ export default function NavigationHeader() {
                     <li><HashLink smooth to="/#about" className="hover:text-blue-500">About</HashLink></li>
                     <li><HashLink smooth to="/#features" className="hover:text-blue-500">Features</HashLink></li>
                     <li><HashLink smooth to="/#contact" className="hover:text-blue-500">Contact</HashLink></li>
+                    {isConnected && (
+                        <li><Link to="/todolist" className="hover:text-blue-500">Todo List</Link></li>
+                    )}
                     <ConnectNavHandler />
                 </ul>
             </nav>
