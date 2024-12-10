@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-//import axios from 'axios'; // TO DO: Axios for LogoutEndpoint
+import axios from 'axios';
 import { updateLocalStorage } from './ConnectNavHandler';
 
-//const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 export default function Logout(){
     const navigate = useNavigate();
@@ -17,12 +17,20 @@ export default function Logout(){
         }
 
         try {
-            // To Do: Call logout endpoint
-            //localStorage.removeItem('access_token');
-            updateLocalStorage("access_token", null);
+            await axios.post(
+                `${FASTAPI_BASE_URL}/logout`, 
+                {}, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            console.log("Logout successful");
         } catch (error) {
             console.log(error);
         } finally {
+            updateLocalStorage("access_token", null);
             navigate('/login');
         }
     };

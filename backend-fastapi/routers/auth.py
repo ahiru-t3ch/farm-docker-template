@@ -37,6 +37,13 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    # Check if the token is blacklisted
+    blacklisted_token = await collection_blacklisted_tokens.find_one({"token": token})
+    if blacklisted_token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token is invalid or has been logged out"
+        )
     try:
         payload = decode_token(token)
         username: str = payload.get("sub")
@@ -123,4 +130,22 @@ async def login_for_access_token(
     return Token(access_token=access_token, token_type="bearer")
 
 
-# TO DO: Add logout router
+@router.post("/logout")
+async def logout(token: Annotated[str, Depends(oauth2_scheme)]):
+    """
+    Invalidate the current token by adding it to the blacklist.
+    """
+    try:
+        # Decode the token to validate and get payload
+        payload = decode_token(token)
+        blacklisted_token = {
+            "token": token,
+            "blacklisted_at": datetime.utcnow()
+        }
+        await collection_blacklisted_tokens.insert_one(blacklisted_token)
+        return {"message": "Logout successful"}
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
