@@ -1,22 +1,26 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavigationHeader from "./components/NavigationHeader";
-import HomeSection from "./components/HomeSection";
-import AboutSection from "./components/AboutSection";
-import FeaturesSection from "./components/FeaturesSection";
-import ContactSection from "./components/ContactSection";
+import LandingPage from "./components/LandingPage";
+import LoginSection from "./components/LoginSection";
+import RegisterSection from "./components/RegisterSection";
 import Footer from "./components/Footer";
 
 
 function App() {
   return (
-    <div> 
+    <Router>
       <NavigationHeader />
-      <HomeSection />
-      <AboutSection />
-      <FeaturesSection />
-      <ContactSection />
-      <Footer />      
-    </div>
+      
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginSection />} />
+        <Route path="/register" element={<RegisterSection />} />
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+      </Routes>
+      
+      <Footer />
+    </Router>
   )
 }
 
-export default App
+export default App;

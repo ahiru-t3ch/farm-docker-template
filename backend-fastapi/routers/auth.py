@@ -67,16 +67,17 @@ async def register_user(
     username: str = Body(...),
     password: str = Body(...),
     email: EmailStr = Body(...),
-    full_name: str = Body(...),
+    first_name: str = Body(...),
+    last_name: str = Body(...),
 ):
     """
     Register a new user.
     """
     # Check if the username or email already exists
-    existing_user = await collection_users.find_one({"username": username})
+    existing_username = await collection_users.find_one({"username": username})
     existing_email = await collection_users.find_one({"email": email})
 
-    if existing_user:
+    if existing_username:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already exists"
@@ -94,7 +95,8 @@ async def register_user(
     user_data = {
         "username": username,
         "email": email,
-        "full_name": full_name,
+        "full_name": first_name,
+        "full_name": last_name,
         "hashed_password": hashed_password,
         "disabled": False,  # Default value for new users
     }

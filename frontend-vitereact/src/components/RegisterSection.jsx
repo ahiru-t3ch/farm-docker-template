@@ -3,12 +3,13 @@ import axios from 'axios';
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
-export default function Register(){
+export default function RegisterSection(){
     const [formData, setFormData] = useState({
         username: "",
         password: "",
         email: "",
-        full_name: "",
+        first_name: "",
+        last_name: "",
     });
 
     const [message, setMessage] = useState("");
@@ -39,30 +40,39 @@ export default function Register(){
     };
 
     return (
-        <div className="p-4 m-4 rounded-lg bg-slate-300">
-        <div className="grid grid-cols-1">
-            <h2 className="text-center text-xl mb-4">Register</h2>
+    <section id="login" className="py-16 bg-gray-100">
+        <div className="max-w-md mx-auto bg-white p-8 rounded shadow">
+            <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
             <form
                 onSubmit={handleSubmit}
                 className="grid grid-cols-1 gap-4 mx-auto max-w-md"
             >
                 <input
                 type="text"
+                name="first_name"
+                placeholder="Fist Name"
+                value={formData.first_name}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border rounded"
+                />
+                <input
+                type="text"
+                name="last_name"
+                placeholder="Last Name"
+                value={formData.last_name}
+                onChange={handleChange}
+                required
+                className="w-full p-3 border rounded"
+                />
+                <input
+                type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="User Name"
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className="p-2 border border-gray-300 rounded"
-                />
-                <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="p-2 border border-gray-300 rounded"
+                className="w-full p-3 border rounded"
                 />
                 <input
                 type="email"
@@ -71,23 +81,24 @@ export default function Register(){
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="p-2 border border-gray-300 rounded"
+                className="w-full p-3 border rounded"
                 />
                 <input
-                type="text"
-                name="full_name"
-                placeholder="Full Name"
-                value={formData.full_name}
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
                 onChange={handleChange}
-                className="p-2 border border-gray-300 rounded"
+                required
+                className="w-full p-3 border rounded"
                 />
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-300"
+                    className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600 transition duration-300"
                 >Register</button>
             </form>
             <p className="text-center mt-4">{message}</p>
         </div>
-        </div>
+    </section>
     );
 };

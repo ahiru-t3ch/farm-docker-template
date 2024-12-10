@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 //import axios from 'axios'; // TO DO: Axios for LogoutEndpoint
-import { updateLocalStorage } from './ConnectionStatus';
+import { updateLocalStorage } from './ConnectNavHandler';
 
 //const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
-const Logout = () => {
+export default function Logout(){
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -30,11 +30,9 @@ const Logout = () => {
     return (
         <button
             onClick={handleLogout}
-            className="text-white hover:text-blue-300 transition duration-300"
+            className="hover:text-blue-500 transition duration-300"
         >
             Sign Out
         </button>
     );
 };
-
-export default Logout;

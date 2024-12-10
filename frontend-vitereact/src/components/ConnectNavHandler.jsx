@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logout from "./Logout";
 
 
-const ConnectionStatus = () => {
+export default function  ConnectNavHandler(){
   const [isConnected, setIsConnected] = useState(
     !!localStorage.getItem("access_token")
   );
@@ -28,15 +28,12 @@ const ConnectionStatus = () => {
   }, []);
 
   if (isConnected) {
-    return (<Logout />);
+    return (<li><Logout /></li>);
   } else {
     return (
       <>
-        <div className="container mx-auto flex justify-between items-center">
-          <ul className="flex space-x-6">
-            <li className="text-white hover:text-blue-300 transition duration-300"><Link to="/login">Login</Link></li>
-          </ul>
-        </div>
+        <li><Link to="/login" className="hover:text-blue-500">Login</Link></li>
+        {/*<li><Link to="/register" className="hover:text-blue-500">Register</Link></li>*/}
       </>
     );
   }
@@ -54,5 +51,3 @@ export const updateLocalStorage = (key, value) => {
   const event = new Event("localStorageUpdate");
   window.dispatchEvent(event);
 };
-
-export default ConnectionStatus;
