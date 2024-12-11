@@ -30,7 +30,7 @@ export default function ListItems({trigger}) {
   
     return (
       <>
-        <h2 className="text-lg font-semibold mb-4">Dummy Item List</h2>
+        <h2 className="text-lg font-semibold mb-4">Item List</h2>
         <ul className="space-y-2">
           {items.map((item) => (
             <li 
