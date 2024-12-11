@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { updateLocalStorage } from './ConnectNavHandler';
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 export default function Logout(){
     const navigate = useNavigate();
+    const { updateAuthState } = useContext(AuthContext);
 
     const handleLogout = async () => {
         const token = localStorage.getItem("access_token");
@@ -30,7 +32,8 @@ export default function Logout(){
         } catch (error) {
             console.log(error);
         } finally {
-            updateLocalStorage("access_token", null);
+            localStorage.removeItem("access_token");
+            updateAuthState(false);
             navigate('/login');
         }
     };

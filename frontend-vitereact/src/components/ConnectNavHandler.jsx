@@ -1,31 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 import Logout from "./Logout";
 
 
 export default function  ConnectNavHandler(){
-  const [isConnected, setIsConnected] = useState(
-    !!localStorage.getItem("access_token")
-  );
-
-  useEffect(() => {
-    // Event listener for localStorage changes
-    const handleStorageChange = () => {
-      setIsConnected(!!localStorage.getItem("access_token"));
-    };
-
-    // Listen for localStorage changes from other tabs/windows
-    window.addEventListener("storage", handleStorageChange);
-
-    // Listen for local changes using a custom event
-    window.addEventListener("localStorageUpdate", handleStorageChange);
-
-    return () => {
-      // Clean up listeners when the component is unmounted
-      window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("localStorageUpdate", handleStorageChange);
-    };
-  }, []);
+  const { isConnected } = useContext(AuthContext);
 
   if (isConnected) {
     return (<li><Logout /></li>);
@@ -37,17 +17,4 @@ export default function  ConnectNavHandler(){
       </>
     );
   }
-};
-
-// Utility function to trigger custom localStorage update events
-export const updateLocalStorage = (key, value) => {
-  if (value === null) {
-    localStorage.removeItem(key);
-  } else {
-    localStorage.setItem(key, value);
-  }
-
-  // Trigger a custom event for local updates
-  const event = new Event("localStorageUpdate");
-  window.dispatchEvent(event);
 };

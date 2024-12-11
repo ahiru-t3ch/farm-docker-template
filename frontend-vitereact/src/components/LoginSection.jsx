@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { updateLocalStorage } from './ConnectNavHandler';
+import { AuthContext } from "./AuthContext";
 
 
 export default function LoginSection() {
   const navigate = useNavigate();
+  const { updateAuthState } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [message, setMessage] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
@@ -32,14 +32,13 @@ export default function LoginSection() {
             },
         }
       );      
-      updateLocalStorage("access_token", response.data.access_token);
+      localStorage.setItem("access_token", response.data.access_token);
+      updateAuthState(true);
       setMessage("Login successful!");
-      setIsLoggedIn(true);
       navigate("/")
     } catch (error) {
       console.log(error);
       setMessage(error.response?.data?.detail || "Invalid username or password");
-      setIsLoggedIn(false);
     }
   };
 
@@ -81,9 +80,6 @@ export default function LoginSection() {
             Login
           </button>
         </form>
-        <p className={`text-center mt-4 ${isLoggedIn ? "text-green-600" : "text-red-600"}`}>
-          {message}
-        </p>
         <div className="mt-6 text-center">
         <p className="text-gray-600">
           Don't have an account?<br/>

@@ -1,14 +1,12 @@
-import { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link"
-import React from "react";
-import icon from '../assets/icon.png';
+import { AuthContext } from "./AuthContext";
 import ConnectNavHandler from "./ConnectNavHandler";
+import icon from '../assets/icon.png';
 
 export default function NavigationHeader() {
-    const [isConnected, setIsConnected] = useState(
-        !!localStorage.getItem("access_token")
-    );
+    const { isConnected } = useContext(AuthContext);
 
     return (
         <header className="fixed w-full bg-white shadow">
