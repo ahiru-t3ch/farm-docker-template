@@ -6,6 +6,7 @@ const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 export default function CreateItemForm({onRefresh}) {
     const [formData, setFormData] = useState({ name: "" });
     const [message, setMessage] = useState("");
+    const token = localStorage.getItem('access_token');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,13 +17,15 @@ export default function CreateItemForm({onRefresh}) {
       e.preventDefault();
     
       try {
-        const response = await axios.post(`${FASTAPI_BASE_URL}/items`, {
-          name: formData.name,
-        }, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.post(
+          `${FASTAPI_BASE_URL}/items`,
+          { name: formData.name,},
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
     
         if (response.status === 200) {
           setFormData({ name: "" });

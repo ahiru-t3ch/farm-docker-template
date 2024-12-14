@@ -5,27 +5,40 @@ const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 export default function ListItems({trigger}) {
     const [items, setItems] = useState([]);
+    const token = localStorage.getItem('access_token');
+
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(
+          `${FASTAPI_BASE_URL}/items`,
+        { 
+          headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        }
+        });
+        if (!response.ok) throw new Error("Failed to fetch items");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
 
     useEffect(() => {
-      const fetchItems = async () => {
-        try {
-          const response = await fetch(`${FASTAPI_BASE_URL}/items`);
-          if (!response.ok) throw new Error("Failed to fetch items");
-          const data = await response.json();
-          setItems(data);
-        } catch (error) {
-          console.error("Error fetching items:", error);
-        }
-      };
-  
       fetchItems();
     }, [trigger]);
 
     const handleDelete = async (id) => {
-        await axios.delete(`${FASTAPI_BASE_URL}/items/${id}`);
-        axios.get(`${FASTAPI_BASE_URL}/items/`)
-            .then(response => setItems(response.data))
-            .catch(error => console.error('Error fetching data:', error));
+        await axios.delete(
+          `${FASTAPI_BASE_URL}/items/${id}`,
+          { 
+            headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,
+          }
+          });
+        fetchItems();
       };
   
     return (

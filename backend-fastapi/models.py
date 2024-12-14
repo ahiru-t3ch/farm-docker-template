@@ -1,8 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class DummyItem(BaseModel):
     name: str
+    user_id: Optional[str] = Field(None, description="The ID of the user who owns the item")
 
 
 class Token(BaseModel):
