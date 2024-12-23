@@ -102,8 +102,8 @@ async def register_user(
     user_data = {
         "username": username,
         "email": email,
-        "full_name": first_name,
-        "full_name": last_name,
+        "first_name": first_name,
+        "last_name": last_name,
         "hashed_password": hashed_password,
         "disabled": False,  # Default value for new users
     }
