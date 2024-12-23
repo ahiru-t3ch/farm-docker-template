@@ -1,5 +1,6 @@
 # Backend FastAPI
 /backend-fastapi/__pycache__/
+/backend-fastapi/*/__pycache__/
 /backend-fastapi/env/
 /backend-fastapi/*.env
 /backend-fastapi/certs/*pem
