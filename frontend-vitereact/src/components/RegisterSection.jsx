@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 
 export default function RegisterSection(){
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -27,6 +29,7 @@ export default function RegisterSection(){
                 },
             });
             setMessage(response.data.message); // Access the response data
+            navigate("/login");
         } catch (error) {
             // Handling errors (including network errors)
             if (error.response) {
