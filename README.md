@@ -11,4 +11,4 @@ For more information on:
 * Contact me for **questions** and **support**
 * Tech description
 <br>
-Please use the repository's wiki: [here](https://github.com/ahiru-t3ch/farm-docker-template/wiki/1-Home)
+Please use the repository's wiki: https://github.com/ahiru-t3ch/farm-docker-template/wiki/1-Home
