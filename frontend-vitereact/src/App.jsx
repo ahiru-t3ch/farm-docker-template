@@ -6,6 +6,7 @@ import RegisterSection from "./components/RegisterSection";
 import ToDoListSection from "./components/ToDoListSection";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import ProfileSection from "./components/ProfileSection";
 
 
 function App() {
@@ -22,6 +23,13 @@ function App() {
           path="/todolist" 
           element={<PrivateRoute>
             <ToDoListSection />
+          </PrivateRoute>}
+        />
+
+        <Route 
+          path="/profile" 
+          element={<PrivateRoute>
+            <ProfileSection />
           </PrivateRoute>}
         />
 

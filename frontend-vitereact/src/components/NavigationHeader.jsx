@@ -22,6 +22,9 @@ export default function NavigationHeader() {
                     {isConnected && (
                         <li><Link to="/todolist" className="hover:text-blue-500">Todo List</Link></li>
                     )}
+                    {isConnected && (
+                        <li><Link to="/profile" className="hover:text-blue-500">Profile</Link></li>
+                    )}
                     <ConnectNavHandler />
                 </ul>
             </nav>
